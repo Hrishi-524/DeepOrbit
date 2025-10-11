@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import GEO from './pages/Geo';
-import MEO1 from './pages/MEO1';
-import MEO2 from './pages/MEO2';
+import Navbar from './components/Navbar.jsx';
+import Home from './pages/Home.jsx';
+import GEO from './pages/GEO.jsx';
+import MEO1 from './pages/MEO1.jsx';
+import MEO2 from './pages/MEO2.jsx';
 
 export default function App() {
   return (
