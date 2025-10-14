@@ -6,7 +6,7 @@ from sklearn.preprocessing import RobustScaler
 # 1️⃣ Load and preprocess
 # -------------------------------
 def load_and_preprocess(path):
-    """Load dataset, sort by utc_time, clean, and resample."""
+    # Load dataset, sort by utc_time, clean, and resample
     df = pd.read_csv(path)
 
     # Ensure correct time column
@@ -32,7 +32,7 @@ def load_and_preprocess(path):
 # 2️⃣ Feature Engineering
 # -------------------------------
 def add_features(df):
-    """Add simple lag and rolling features."""
+    # Add simple lag and rolling features
     df['radial_lag1'] = df['radial_error_m'].shift(1)
     df['radial_diff1'] = df['radial_error_m'].diff()
     df['radial_roll3'] = df['radial_error_m'].rolling(3).mean()
@@ -62,18 +62,11 @@ def add_temporal_features(df):
     return df
 
 
-# -------------------------------
-# 3️⃣ Train/Test Split by Day
-# -------------------------------
+# Train/Test Split by Day
 def split_train_test(df):
-    """
-    Split a dataframe into train and test using n-1 / 1 day split.
-    """
+    # Split a dataframe into train and test using n-1 / 1 day split.
     df = df.sort_index()
     unique_days = df.index.normalize().unique()
-    
-    if len(unique_days) < 2:
-        raise ValueError("Dataset must have at least 2 days for train/test split.")
 
     # Train: all but last day
     train_days = unique_days[:-1]
@@ -82,6 +75,20 @@ def split_train_test(df):
     df_train = df[df.index.normalize().isin(train_days)]
     df_test = df[df.index.normalize() == test_day]
 
+    return df_train, df_test
+
+# Train/Test Split by Percentage
+def split_train_test_percentage(df, train_ratio=0.8):
+    """
+    Split a dataframe into train and test sets based on a percentage of the data.
+    """
+    df = df.sort_index()
+    n_total = len(df)
+    n_train = int(n_total * train_ratio)
+    
+    df_train = df.iloc[:n_train]
+    df_test = df.iloc[n_train:]
+    
     return df_train, df_test
 
 
@@ -106,19 +113,15 @@ def scale_data(df_train, df_test, feature_cols, target_col):
 # 5️⃣ Sequence Creator - FIXED
 # -------------------------------
 def create_sequences(X, y, seq_length=48, n_future=48):
-    """
-    Create sequences for LSTM.
-    
-    FIXED: Returns y with shape (num_sequences, n_future) instead of (num_sequences, n_future, 1)
-    """
+    # Create sequences for LSTM.
     Xs, ys = [], []
 
-    # Check if we have enough data
+    # Check if enough data
     min_required = seq_length + n_future
     if len(X) < min_required:
         n_future = max(1, len(X) - seq_length - 1)
         if n_future <= 0:
-            print(f"❌ ERROR: Not enough data. Need at least {seq_length + 1} samples, got {len(X)}.")
+            print(f"Need at least {seq_length + 1} samples, got {len(X)}.")
             return np.empty((0, seq_length, X.shape[1])), np.empty((0, 1))
 
     # Create sequences
@@ -126,9 +129,8 @@ def create_sequences(X, y, seq_length=48, n_future=48):
         # Input sequence
         Xs.append(X[i:i + seq_length])
         
-        # Target sequence - FLATTEN to remove extra dimension
         target_seq = y[i + seq_length:i + seq_length + n_future]
-        ys.append(target_seq.flatten())  # THIS IS THE FIX!
+        ys.append(target_seq.flatten())  
     
     Xs = np.array(Xs)
     ys = np.array(ys)

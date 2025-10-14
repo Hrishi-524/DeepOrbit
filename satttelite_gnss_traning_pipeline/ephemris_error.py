@@ -9,6 +9,9 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 from scipy import stats
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0' # to ignore warning abou oneDSS that is comming on console
+
 
 from src.Lstm import LSTMModel
 from src.Transformer import TransformerModel
@@ -16,9 +19,6 @@ from src.Probablistic import ProbabilisticModel
 from src import preprocessing
 
 def analyze_residual_normality(y_true, y_pred, model_name, dataset_name):
-    """
-    Analyze if residuals follow normal distribution (CRITICAL FOR ISRO)
-    """
     # Calculate residuals
     residuals = (y_true - y_pred).flatten()
     
@@ -71,14 +71,14 @@ def analyze_residual_normality(y_true, y_pred, model_name, dataset_name):
     # 2. Q-Q Plot (most important!)
     ax = axes[1]
     stats.probplot(residuals, dist="norm", plot=ax)
-    ax.set_title('Q-Q Plot\n(Should follow red line)')
+    ax.set_title('Q-Q Plot\n')
     ax.grid(True, alpha=0.3)
     
     # 3. Residuals vs Predicted (check for patterns)
     ax = axes[2]
     ax.scatter(y_pred.flatten(), residuals, alpha=0.3, s=10)
     ax.axhline(y=0, color='r', linestyle='--', linewidth=2)
-    ax.set_title('Residuals vs Predicted\n(Should be random scatter)')
+    ax.set_title('Residuals vs Predicted\n')
     ax.set_xlabel('Predicted Value (m)')
     ax.set_ylabel('Residual (m)')
     ax.grid(True, alpha=0.3)

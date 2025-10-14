@@ -2,20 +2,23 @@ import React from 'react';
 
 export default function MetricsCard({ title, value, unit, color = '#3b82f6' }) {
   return (
-    <div style={{ 
-      border: '1px solid #e5e7eb', 
-      padding: '1.5rem', 
-      borderRadius: '8px',
-      background: 'white'
-    }}>
-      <div style={{ fontSize: '0.875rem', color: '#6b7280', marginBottom: '0.5rem' }}>
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+      {/* Title */}
+      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
         {title}
       </div>
-      <div style={{ fontSize: '2rem', fontWeight: 'bold', color }}>
+
+      {/* Value */}
+      <div 
+        className="text-3xl font-bold mb-1"
+        style={{ color }}
+      >
         {value}
       </div>
+
+      {/* Unit */}
       {unit && (
-        <div style={{ fontSize: '0.75rem', color: '#9ca3af', marginTop: '0.25rem' }}>
+        <div className="text-xs text-gray-500 dark:text-gray-500">
           {unit}
         </div>
       )}

@@ -1,65 +1,96 @@
 import React from 'react';
+import { CheckCircle2, XCircle } from 'lucide-react';
 
 export default function ModelComparison({ metrics }) {
-  if (!metrics) return <div>Loading...</div>;
+  if (!metrics) {
+    return (
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+        <p className="text-gray-600 dark:text-gray-400">Loading comparison data...</p>
+      </div>
+    );
+  }
   
   const models = Object.keys(metrics);
   
   return (
-    <div style={{ 
-      border: '1px solid #e5e7eb', 
-      padding: '1.5rem', 
-      borderRadius: '8px',
-      background: 'white',
-      marginTop: '2rem'
-    }}>
-      <h2 style={{ marginBottom: '1rem', fontSize: '1.25rem' }}>Model Comparison</h2>
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+        Model Comparison
+      </h2>
       
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr style={{ borderBottom: '2px solid #e5e7eb' }}>
-            <th style={{ padding: '0.75rem', textAlign: 'left' }}>Model</th>
-            <th style={{ padding: '0.75rem', textAlign: 'right' }}>RMSE (m)</th>
-            <th style={{ padding: '0.75rem', textAlign: 'right' }}>MAE (m)</th>
-            <th style={{ padding: '0.75rem', textAlign: 'right' }}>Shapiro p</th>
-            <th style={{ padding: '0.75rem', textAlign: 'center' }}>Normal?</th>
-          </tr>
-        </thead>
-        <tbody>
-          {models.map(model => (
-            <tr key={model} style={{ borderBottom: '1px solid #e5e7eb' }}>
-              <td style={{ padding: '0.75rem', fontWeight: '600' }}>{model}</td>
-              <td style={{ padding: '0.75rem', textAlign: 'right' }}>
-                {metrics[model].rmse.toFixed(4)}
-              </td>
-              <td style={{ padding: '0.75rem', textAlign: 'right' }}>
-                {metrics[model].mae.toFixed(4)}
-              </td>
-              <td style={{ padding: '0.75rem', textAlign: 'right' }}>
-                {metrics[model].shapiro_p.toFixed(4)}
-              </td>
-              <td style={{ 
-                padding: '0.75rem', 
-                textAlign: 'center',
-                fontSize: '1.5rem',
-                color: metrics[model].shapiro_p > 0.05 ? '#10b981' : '#ef4444'
-              }}>
-                {metrics[model].shapiro_p > 0.05 ? '✓' : '✗'}
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b-2 border-gray-200 dark:border-gray-700">
+              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Model
+              </th>
+              <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700 dark:text-gray-300">
+                RMSE (m)
+              </th>
+              <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700 dark:text-gray-300">
+                MAE (m)
+              </th>
+              <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Shapiro p
+              </th>
+              <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Normal Distribution
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {models.map(model => {
+              const isNormal = metrics[model].shapiro_p > 0.05;
+              
+              return (
+                <tr 
+                  key={model} 
+                  className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                >
+                  <td className="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">
+                    {model}
+                  </td>
+                  <td className="px-4 py-3 text-right text-gray-700 dark:text-gray-300 font-mono text-sm">
+                    {metrics[model].rmse.toFixed(4)}
+                  </td>
+                  <td className="px-4 py-3 text-right text-gray-700 dark:text-gray-300 font-mono text-sm">
+                    {metrics[model].mae.toFixed(4)}
+                  </td>
+                  <td className="px-4 py-3 text-right text-gray-700 dark:text-gray-300 font-mono text-sm">
+                    {metrics[model].shapiro_p.toFixed(4)}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center justify-center gap-2">
+                      {isNormal ? (
+                        <>
+                          <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />
+                          <span className="text-sm font-medium text-green-600 dark:text-green-400">
+                            Yes
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                          <span className="text-sm font-medium text-red-600 dark:text-red-400">
+                            No
+                          </span>
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       
-      <div style={{ 
-        marginTop: '1rem', 
-        padding: '0.75rem', 
-        background: '#f3f4f6', 
-        borderRadius: '4px',
-        fontSize: '0.875rem',
-        color: '#6b7280'
-      }}>
-        <strong>Note:</strong> Shapiro-Wilk p-value &gt; 0.05 indicates normally distributed residuals (required by ISRO)
+      <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <p className="text-sm text-blue-900 dark:text-blue-200">
+          <span className="font-semibold">Note:</span> Shapiro-Wilk p-value greater than 0.05 indicates 
+          normally distributed residuals, which is a key requirement for ISRO competition evaluation.
+        </p>
       </div>
     </div>
   );
