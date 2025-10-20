@@ -90,19 +90,19 @@ export default function GEO() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <MetricsCard 
             title="RMSE" 
-            value={metrics[selectedModel].rmse.toFixed(4)} 
+            value={metrics[selectedModel].rmse} 
             unit="meters"
             color="#3b82f6"
           />
           <MetricsCard 
             title="MAE" 
-            value={metrics[selectedModel].mae.toFixed(4)} 
+            value={metrics[selectedModel].mae} 
             unit="meters"
             color="#10b981"
           />
           <MetricsCard 
             title="Shapiro p-value" 
-            value={metrics[selectedModel].shapiro_p.toFixed(4)} 
+            value={metrics[selectedModel].shapiro_p} 
             unit="normality test"
             color="#8b5cf6"
           />

@@ -52,13 +52,13 @@ export default function ModelComparison({ metrics }) {
                     {model}
                   </td>
                   <td className="px-4 py-3 text-right text-gray-700 dark:text-gray-300 font-mono text-sm">
-                    {metrics[model].rmse.toFixed(4)}
+                    {metrics[model].rmse}
                   </td>
                   <td className="px-4 py-3 text-right text-gray-700 dark:text-gray-300 font-mono text-sm">
-                    {metrics[model].mae.toFixed(4)}
+                    {metrics[model].mae}
                   </td>
                   <td className="px-4 py-3 text-right text-gray-700 dark:text-gray-300 font-mono text-sm">
-                    {metrics[model].shapiro_p.toFixed(4)}
+                    {metrics[model].shapiro_p}
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-center gap-2">
