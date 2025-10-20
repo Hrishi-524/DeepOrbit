@@ -38,14 +38,14 @@ Normal error distribution (statistical reliability requirement)
 
 | Challenge | Solution | Why |
 |-----------|----------|-----|
-| ±45m outliers in GEO | `RobustScaler` | Uses median/IQR, not mean/std |
+| ±45m outliers in GEO | RobustScaler | Uses median/IQR, not mean/std |
 | Irregular timestamps | Resample to 15min + interpolate | Uniform time grid |
 | Small dataset | Early stopping + dropout | Prevent overfitting |
 | Operational stability | Huber loss | Robust to outliers, smoother than MSE |
 
 
 ## 📁 Project Structure
-
+```
 satellite_gnss/
 ├── data/
 │   ├── DATA_GEO_Train.csv      # Geostationary satellite
@@ -66,7 +66,7 @@ satellite_gnss/
 │
 └── plots/
     └── comparison_*.png        # Visualizations
-
+```
 # 💡 Key Insights
 1. Architecture Depends on Data Characteristics
 
