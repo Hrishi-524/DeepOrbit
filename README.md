@@ -29,8 +29,6 @@ Normal error distribution (statistical reliability requirement)
 3. Probabilistic LSTM (higher dropout)
    ├─ Uncertainty quantification
    └─ Best for: Small, precise variations
-```
-
 **Input**: 12 hours of history (48 × 15min intervals)  
 **Output**: 12 hours of predictions (48 future steps)
 
@@ -48,7 +46,7 @@ Normal error distribution (statistical reliability requirement)
 ---
 
 ## 📁 Project Structure
-```
+
 satellite_gnss/
 ├── data/
 │   ├── DATA_GEO_Train.csv      # Geostationary satellite
