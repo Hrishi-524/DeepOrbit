@@ -14,6 +14,9 @@ export default function Home() {
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-3">
             GNSS Satellite Error Prediction using Deep Learning
           </h1>
+          <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+            <Link to='https://github.com/Hrishi-524/DeepOrbit' target='_blank'>GitHub : https://github.com/Hrishi-524/DeepOrbit</Link>
+          </h3>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl">
             A comparative study of LSTM, Transformer, and Probabilistic models for 
             time-series forecasting of satellite positioning errors
