@@ -43,7 +43,6 @@ Normal error distribution (statistical reliability requirement)
 | Small dataset | Early stopping + dropout | Prevent overfitting |
 | Operational stability | Huber loss | Robust to outliers, smoother than MSE |
 
----
 
 ## 📁 Project Structure
 
