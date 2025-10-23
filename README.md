@@ -1,8 +1,8 @@
-# 🛰️ Satellite Error Prediction using Deep Learning (Please visit Our Deployed Website for visuals & results)
+# Satellite Error Prediction using Deep Learning (Please visit Our Deployed Website for visuals & results)
 
 Predicting GPS satellite positioning errors 12 hours ahead using LSTM, Transformer, and Probabilistic models.
 
-# 🎯 The Problem
+# The Problem
 GPS satellites aren't perfect. Their positions drift, atomic clocks drift, and these tiny errors compound into meters of positioning inaccuracy on your phone. This project predicts those errors before they happen.
 Challenge: Given 7 days of satellite error history (sampled every 15 minutes), predict the next 12 hours with:
 
@@ -13,8 +13,8 @@ Normal error distribution (statistical reliability requirement)
 | Satellite Type | Best Model     | MAE   | RMSE  | GEO |
 |----------------|----------------|-------|-------|-----|
 | Geostationary (36,000 km) | Transformer | 7.47m | 13.86m |   |
-| MEO1 Medium Orbit (20,000 km) | Probabilistic | **0.12m ⭐** | **0.15m** |   |
-| MEO2 Medium Orbit (20,000 km) | Transformer | **0.12m ⭐** | **0.14m** |   |
+| MEO1 Medium Orbit (20,000 km) | Probabilistic | **0.12m ** | **0.15m** |   |
+| MEO2 Medium Orbit (20,000 km) | Transformer | **0.12m ** | **0.14m** |   |
 
 # Architecture
 
@@ -44,7 +44,7 @@ Normal error distribution (statistical reliability requirement)
 | Operational stability | Huber loss | Robust to outliers, smoother than MSE |
 
 
-## 📁 Project Structure
+##  Project Structure
 ```
 satellite_gnss/
 ├── data/
@@ -67,7 +67,7 @@ satellite_gnss/
 └── plots/
     └── comparison_*.png        # Visualizations
 ```
-# 💡 Key Insights
+#  Key Insights
 1. Architecture Depends on Data Characteristics
 
 Transformer won on volatile GEO (attention helps with spikes)
